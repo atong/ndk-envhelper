@@ -6,8 +6,9 @@ About
 -----
 
 This mini-project extracts environment variables that should useful
-to porting projects to Android using the Android NDK's toolchains.
-It discovers the information by running a build via ndk-build.
+to porting projects to Android using the Android NDK's toolchains
+where converting the build system to Android.mk is not practical.
+It discovers the information by running a jni build via `ndk-build`.
 
 This is useful due to the myriad of toolchains, targets, and build
 configurations that the NDK supports (in addition to different NDK
@@ -23,7 +24,7 @@ These can then be sourced as part of your build process.
 If `$ANDROID_NDK_ROOT` is set, then you can simply run make.
 
 Optional: customize project/ndk settings first, for example via
-jni/Application.mk)
+jni/Application.mk.
 
 
 Example
@@ -53,12 +54,16 @@ make[1]: Leaving directory `/Users/atong/work/ndk-envhelper'
 # build a autoconf library project
 % cd libfoobar
 % autoconf
+
 # source toolchain specific variables
 % . ../ndk-envhelper/setenv-armeabi-v7a.sh
+
 # source helper script for autoconf
 % . ../ndk-envhelper/setenv_helper_autoconf.sh	
+
 % ./configure --host=arm-linux-android
 % make
+# TADA!
 ```
 
 
