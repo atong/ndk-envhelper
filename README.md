@@ -17,10 +17,10 @@ versions).
 Using
 -----
 
-Run 'ndk-build' to generate the output files: setenv-<target>.sh.
+Run `ndk-build` to generate the output files: `setenv-<target>.sh`.
 These can then be sourced as part of your build process.
 
-If $ANDROID_NDK_ROOT is set, then you can simply run make.
+If `$ANDROID_NDK_ROOT` is set, then you can simply run make.
 
 Optional: customize project/ndk settings first, for example via
 jni/Application.mk)
@@ -29,7 +29,7 @@ jni/Application.mk)
 Example
 -------
 
-'''
+```
 # set ndk location
 % export ANDROID_NDK_ROOT=~/Development/android-ndk
 
@@ -47,9 +47,9 @@ Generating ./setenv-mips.sh
 [mips] Install        : libndk-make-dummy.so => libs/mips/libndk-make-dummy.so
 make[1]: Leaving directory `/Users/atong/work/ndk-envhelper'
 % cd ..
-'''
+```
 
-'''
+```
 # build a autoconf library project
 % cd libfoobar
 % autoconf
@@ -59,14 +59,14 @@ make[1]: Leaving directory `/Users/atong/work/ndk-envhelper'
 % . ../ndk-envhelper/setenv_helper_autoconf.sh	
 % ./configure --host=arm-linux-android
 % make
-'''
+```
 
 
 Alternatives
 ------------
 
 See NDK's docs/STANDALONE-TOOLCHAIN.html, specifically the
-build/tools/make-standalone-toolchain.sh tool.
+`build/tools/make-standalone-toolchain.sh` script.
 
 droid-gcc from https://github.com/tmurakam/droid-wrapper/
 
