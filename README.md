@@ -5,26 +5,27 @@ NDK EnvHelper
 About
 -----
 
-This mini-project extracts environment variables that should useful
-to porting projects to Android using the Android NDK's toolchains
-where converting the build system to Android.mk is not practical.
-It discovers the information by running a jni build via `ndk-build`.
+This mini-project aims to assist porting projects to Android using
+the Android NDK's toolchains, but without having to convert a project's
+build system to Android.mk.  It works by discovering and then exporting
+relevant environment variables by running a test JNI build.
 
-This is useful due to the myriad of toolchains, targets, and build
-configurations that the NDK supports (in addition to different NDK
-versions).
+This mechanism is useful due to the myriad of toolchains, targets,
+and build configurations that the NDK potentially supports, and the
+build related changes that updated NDK versions may bring.
 
 
 Using
 -----
 
 Run `ndk-build` to generate the output files: `setenv-<target>.sh`.
-These can then be sourced as part of your build process.
+These can then be sourced as part of your build process per target,
+and to generate additional build configurables.
 
 If `$ANDROID_NDK_ROOT` is set, then you can simply run make.
 
-Optional: customize project/ndk settings first, for example via
-jni/Application.mk.
+Optional: customize project/ndk settings first, for example setting
+`APP_OPTIM` via `jni/Application.mk`.
 
 
 Example
@@ -55,15 +56,32 @@ make[1]: Leaving directory `/Users/atong/work/ndk-envhelper'
 % cd libfoobar
 % autoconf
 
-# source toolchain specific variables
+# source toolchain specific variables (for arm v7)
 % . ../ndk-envhelper/setenv-armeabi-v7a.sh
 
-# source helper script for autoconf
+# source included helper script for autoconf
 % . ../ndk-envhelper/setenv_helper_autoconf.sh	
 
 % ./configure --host=arm-linux-android
 % make
 # TADA!
+```
+
+
+Sample Output
+-------------
+
+```
+% cat ndk-envhelper/setenv-armeabi-v7a.sh
+# NDK toolchain env vars for armeabi-v7a using /Users/atong/Development/android-ndk-r9c
+export ANDROID_NDK_ROOT=/Users/atong/Development/android-ndk-r9c
+export ARCH=arm
+export TOOLCHAIN_PREFIX=/Users/atong/Development/android-ndk-r9c/toolchains/arm-linux-androideabi-4.6/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-
+export SYSROOT=/Users/atong/Development/android-ndk-r9c/platforms/android-3/arch-arm
+export CFLAGS="-fpic -ffunction-sections -funwind-tables -fstack-protector -no-canonical-prefixes -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 --sysroot=/Users/atong/Development/android-ndk-r9c/platforms/android-3/arch-arm"
+export CXXFLAGS="-fpic -ffunction-sections -funwind-tables -fstack-protector -no-canonical-prefixes -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -fno-exceptions -fno-rtti --sysroot=/Users/atong/Development/android-ndk-r9c/platforms/android-3/arch-arm"
+export LDFLAGS="-no-canonical-prefixes -march=armv7-a -Wl,--fix-cortex-a8 --sysroot=/Users/atong/Development/android-ndk-r9c/platforms/android-3/arch-arm"
+export ARFLAGS="crsD"
 ```
 
 
